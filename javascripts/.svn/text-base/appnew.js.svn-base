@@ -1,0 +1,214 @@
+/**
+ * Created by team on 16/2/23.
+ */
+
+requirejs.config({
+    //By default load any module IDs from js/lib
+    baseUrl: Config.wapcontext + 'javascripts',
+    //except, if the module ID starts with "app",
+    //load it from the javascripts/app directory. paths
+    //config is relative to the baseUrl, and
+    //never includes a ".js" extension since
+    //the paths config could be for a directory.
+    paths: {
+        app: './app',
+        util: "./utils/util",
+        model: "./utils/model",
+        banner: './modules/banner/banner'
+    },
+    waitSeconds: 0,
+    urlArgs: "ver=20160413"
+});
+
+require(["util", "model"], function (util, Model) {
+    $(document).ready(function () {
+
+        // 移除移动端浏览器上300ms的点击延迟 之所以有300ms的延迟是因为浏览器在等待判断是否为双击事件
+        FastClick.attach(document.body);
+
+        // 配置路由
+        can.route.bindings.pushstate.root = Config.wapcontext;
+        can.route(":page");
+        can.route(":page/:func");
+        can.route.ready();
+
+        // 保留一位有效数字
+        Mustache.registerHelper("money", function (moneyValue) {
+            var intValue = parseInt(moneyValue * 100);
+            if (typeof moneyValue == "function") {
+                intValue = parseInt(moneyValue() * 100);
+            }
+            return can.mustache.safeString((parseFloat(intValue) / 100).toFixed(1))
+        });
+
+        // 保留两位有效数字
+        Mustache.registerHelper("money2", function (moneyValue) {
+            var intValue = parseInt(moneyValue * 100);
+            if (typeof moneyValue == "function") {
+                intValue = parseInt(moneyValue() * 100);
+            }
+            return can.mustache.safeString((parseFloat(intValue) / 100).toFixed(2))
+        });
+
+        // 移除字符串两端的空格字符串
+        Mustache.registerHelper("trim", function (stringValue) {
+            var D = stringValue;
+            if (typeof stringValue == "function") {
+                D = stringValue()
+            }
+            return can.mustache.safeString(D.replace(/(^D(B|N)?)|P|N/, ""))
+        });
+
+        // 日期格式化 yyyy-mm-dd HH:MM
+        Mustache.registerHelper("DateTime", function (E, C) {
+            var D = E;
+            if (typeof E == "function") {
+                D = E()
+            }
+            return can.mustache.safeString(util.Format.dateFormater(D, util.Format.masks.DateTime))
+        });
+
+        var controller = can.Control.extend({
+            init: function () {
+                var self = this;
+                util.preloadImage("newicon01.png");
+                util.preloadImage("newicon02.png");
+                util.removeLocalTempOrders();
+                if (self._shouldParsePathNameToRoute()) {
+                    self.parsePathNameToRoute();
+                }
+            },
+            parsePathNameToRoute: function () {
+                var pathname = window.location.pathname;
+                var C = can.route.deparam(pathname.substring(Config.wapcontext.length));
+                var componentName = util.Route.getPageTagNameByRouteAttr(C);
+                require(["appComponents/" + componentName], function (F) {
+                    var G = can.view.mustache("<" + componentName + "/>")({});
+                    $("#pagecontent").html(G)
+                })
+            },
+            _shouldParsePathNameToRoute: function () {
+
+                var pathname = window.location.pathname;
+                // 非入口页面直接返回
+                if (pathname.indexOf(Config.entryPage) < 0) {
+                    return true;
+                } else { // index.html首页需要清除订单信息
+                    // 初始页面包含商家信息，认为第一次进入，清除缓冲
+                    if (util.getQueryStringValue("res"))
+                        util.removeOrderInfo();
+                }
+
+                /**
+                 *  授权配置整个过程如下：
+                 *   1、初次进入页面时，页面路径上带有res\tableid\type等商家桌台信息，页面需要授权以方便后续支付接口
+                 *   2、授权成功后页面重定向到入口页面并且带有?code=xxx的授权返回码标识
+                 *   3、需要根据code和当前页面url从后台获取签名信息，由于传入后台url不可以带有?后面的参数信息，页面此时再做一次前端重定向到处事页面，重定向前保存code
+                 *   4、根据code和url从后台取得签名信息，认证成功
+                 */
+                var code = util.getLocalItem("code");
+                if (code) {
+                    // 授权页面地址 http://www.bj-evetime.com/wx/index.html
+                    var authorizePageUrl = window.location.origin + window.location.pathname;
+                    console.info("授权成功Code = " + code + " openId页面授权地址authorizePageUrl=" + authorizePageUrl);
+                    util.removeLocalItem("code");
+                    Model.WX.payConfig({currentUrl: authorizePageUrl, code: code}, function (configObject) {
+                        var orderInfo = util.getOrderInfo();
+                        orderInfo.openId = configObject["openId"];
+                        orderInfo.phoneNumber = configObject["phone"];
+                        wx.config({
+                            debug: false,
+                            appId: configObject["appId"],
+                            timestamp: parseInt(configObject.timeStamp),//configObject.timeStamp
+                            nonceStr: configObject.nonceStr,
+                            signature: configObject.signature,
+                            jsApiList: [
+                                'onMenuShareTimeline',
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareWeibo',
+                                'onMenuShareQZone'
+                            ]
+                        });
+                        wx.ready(function () {
+                            var shareData = {
+                                title: '美食公众平台',
+                                desc: '每时科技，用科技提供美食',
+                                link: 'http://www.bj-evetime.com/',
+                                imgUrl: 'http://demo.open.weixin.qq.com/jssdk/images/p2166127561.jpg',
+                                trigger: function (res) {
+                                    console.info('用户点击发送给朋友');
+                                },
+                                success: function (res) {
+                                    console.info('已分享');
+                                },
+                                cancel: function (res) {
+                                    console.info('已取消');
+                                },
+                                fail: function (res) {
+                                    console.info(JSON.stringify(res));
+                                }
+                            };
+                            wx.onMenuShareAppMessage(shareData);
+                            wx.onMenuShareTimeline(shareData);
+                            wx.onMenuShareQQ(shareData);
+                            wx.onMenuShareQZone(shareData);
+                            wx.onMenuShareWeibo(shareData);
+                        });
+                        console.info("获取到的页面openId=" + orderInfo.openId);
+                        util.saveOrderInfo(orderInfo);
+                    });
+                } else {
+                    code = util.getQueryStringValue("code");
+                    if (code) {
+                        util.setLocalItem("code", code);
+                        window.location.href = window.location.href.split("?")[0];
+                    } else {
+                        var order = {};
+                        var res = util.getQueryStringValue("res");
+                        var type = util.getQueryStringValue("type");
+                        var tableId = util.getQueryStringValue("tableid");
+                        console.info("还未授权 res=" + res + "  \r\n type = " + type + "  \r\n tableId = " + tableId);
+                        order.seatId = tableId;
+                        order.cloudId = res;
+                        order.cloudName = "";
+                        order.totalPrice = 0;
+                        order.isComplete = false;
+                        order.imgPath = "http://www.bj-evetime.com/logo.png";
+                        order.openId = "";
+                        order.payMethod = "2";
+                        order.items = [];
+                        order.total = 0;
+                        util.saveOrderInfo(order);
+                        if (!Config.Debug) {
+                            util.WX.authorizePage(Config.entryPage);
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            },
+            _loadPage: function (routeAttr) {
+                var componentName = util.Route.getPageTagNameByRouteAttr(routeAttr);
+                require(["appComponents/" + componentName, "util"], function (component, util) {
+                    var html = can.view.mustache("<" + componentName + "/>")({});
+                    $("#pagecontent").html(html);
+                    util.Busy.start();
+                });
+            },
+            "route": function (routeAttr) {
+                this._loadPage(routeAttr);
+            },
+            ":page route": function (routeAttr) {
+                this._loadPage(routeAttr);
+            },
+            ":page/:func route": function (routeAttr) {
+                this._loadPage(routeAttr);
+            }
+        });
+        new controller();
+    });
+});
+
+
+

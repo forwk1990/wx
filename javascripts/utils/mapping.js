@@ -1,0 +1,205 @@
+/**
+ * Created by Itachi on 16/6/18.
+ */
+
+var Mapping = {
+  StoreMenu:{
+    "sectionTitle":"title",
+    "sectionNum":"purchaseCount",
+    "foodtype":"type",
+    "foodInfo":"menusInfo"
+  },
+  Menu:{
+    "foodDescrip":"description",
+    "foodGroupStatus":"isParent",
+    "foodImage":"imageUrl",
+    "foodNum":"quantity",
+    "isSuit":"setMealFlag", // 是否为套餐
+    "remainingFoodNum":"remainQuantity", // 剩余数量 (沽清)
+    "estimate":"isEstimate",// 是否已经沽清
+    "autoEstimateClear":"isAutoEstimate", // 是否自动沽清
+    "warnEstimateClearNum":"warningQuantity",// 预警数量 、 临界值
+    "foodChoice":"children", // 子项
+    "bigImgPath":"bigImageUrl", // 大图
+    "suitInfo":"setMealInfo", // 套餐详情
+    "id":"systemId",// 菜品ID
+    "foodShort":"brevityCode",// 简码
+    "presentPrice":"price", // 现价
+    "foodCode":"code", // 菜品编码
+    "foodPrice":"originalPrice", // 原价
+    "foodtypeName":"typeName", // 菜品分类名称
+    "foodGroupId":"groupId", // 分组ID
+    "foodtype":"type",
+    "foodName":"name",
+    "midImgPath":"midImageUrl",
+    "tasteDesc":"specificationInfo" // 规格详情
+  },
+  ChildMenu:{
+    "choiceName": "name",
+    "presentPrice": "price",
+    "choicePrice": "originalPrice",
+    "choiceNum": "quantity",
+    "id": "systemId",
+    "choiceParentName": "parentName"
+  },
+  SetMeal:{
+    "suitId":"setMealId",
+    "foodId":"systemId",
+    "cloudId":"cloudId",
+    "foodName":"name",
+    "foodTypeName":"typeName",
+    "foodUnitId":"unitId",
+    "foodUnitName":"unitName",
+    "foodCount":"count",
+    "isNeed":"isNeed",
+    "isUsed":"isUsed",
+    "updateStatus":"status",
+    "rowIndex":"rowIndex"
+  }
+};
+
+var ModelTranslator = {
+  translateMenus:function(serverMenus,index){
+    if(!serverMenus || serverMenus.length <= 0)return null;
+    var menuArray = [];
+    for(var i = 0;i<serverMenus.length;i++){
+      var menuObject = this.translateMenu(serverMenus[i]);
+      menuObject["menuIndex"] = i;
+      menuObject["index"] = index;
+      menuArray.push(menuObject);
+    }
+    return menuArray;
+  },
+  translateMenu:function(serverObject){
+    if(!serverObject) return null;
+    var self = this,newObject = self.translate(serverObject,"Menu"),childrenArray = [],setMealInfoArray = [],specificationArray = [];
+    var children = newObject["children"];
+    var setMealInfo = newObject["setMealInfo"];
+    var specificationString = newObject["specificationInfo"];
+    var minValue = newObject["price"],maxValue = newObject["price"];
+    for(var i = 0;i<children.length;i++){
+      var child = self.translateChildMenu(children[i]);
+      if(i == 0){
+        minValue = child.price;
+        maxValue = child.price;
+      }
+      child["index"] = i;
+      childrenArray.push(child);
+      if(minValue >= child.price){
+        minValue = child.price;
+      }
+      if(maxValue <= child.price){
+        maxValue = child.price;
+      }
+    }
+
+    /**
+    for(var i = 0;i<setMealInfo.length;i++){
+      var setMeal = self.translateSetMeal(setMealInfo[i]);
+      setMeal["index"] = i;
+      setMealInfoArray.push(setMeal);
+    }*/
+
+    /*套餐数据*/
+    if(setMealInfo != null){
+      if(!setMealInfo.requireItems)setMealInfo.requireItems = [];
+      if(!setMealInfo.multipleItems)setMealInfo.multipleItems = [];
+
+      for(var i = 0;i<setMealInfo.requireItems.length;i++){
+        var requireItem = setMealInfo.requireItems[i];
+        requireItem["selected"] = 1;
+      }
+
+      for(var i = 0;i<setMealInfo.multipleItems.length;i++){
+        var multipleItem = setMealInfo.multipleItems[i];
+        multipleItem["selectedQuantity"] = 0;
+        for(var j = 0;j<multipleItem.items.length;j++){
+          var item = multipleItem.items[j];
+          item["selected"] = 0;
+        }
+      }
+    }
+
+    // 子项
+    newObject["children"] = childrenArray;
+    // 套餐
+    //newObject["setMealInfo"] = setMealInfoArray;
+    // 是否为套餐 (没有套餐的时候回传null)
+    newObject["setMealFlag"] = setMealInfo != null;
+    // 做法、口味
+    newObject["specificationInfo"] = self.translateSpecification(newObject["specificationInfo"]);
+    // 是否带口味
+    newObject["isSpecification"] = newObject["specificationInfo"].length > 0;
+    newObject["activeFlag"] = 1;
+    newObject["isDiscount"] = newObject["originalPrice"] != newObject["price"];
+    newObject["selectedChildIndex"] = childrenArray.length > 0 ? -1 : 0;
+    newObject["selectedSystemId"] = newObject["systemId"];
+    newObject["selectedSpecificationIndex"] =newObject["specificationInfo"].length > 0 ? -1 : 0;
+    newObject["currentSelectedPrice"] = childrenArray.length <=0 ? newObject["price"] : (maxValue > minValue ? (minValue + "～¥" + maxValue) : minValue);
+    newObject["selectedPrice"] = newObject["currentSelectedPrice"];
+    newObject["selectedOriginalPrice"] = newObject["originalPrice"];
+    newObject["selectedOriginalTotalPrice"] = 0;
+    newObject["selectedTotalPrice"] = 0;
+    newObject["selectedOk"] = 0;
+    newObject["canMinus"] = 0;
+    newObject["selectedTaste"] = "";
+
+    /*
+     * 是否显示剩余份数：
+     * 1、带子项的不自动沽清，isAutoEstimate为0
+     * 2、不自动沽清的菜品不需要显示剩余份数，可以无限点餐
+     * 3、已沽清的菜品显示已售罄 isEstimate 为1 显示已售罄
+     */
+
+    newObject["isShowProgressQuantity"] = 0;
+
+    // 剩余数量为0的，为已售罄
+    if(newObject["isAutoEstimate"] == 1){
+      // 剩余数量 <＝ 预警值 才显示剩余数量
+      newObject["isShowProgressQuantity"] = newObject["remainQuantity"] <= newObject["warningQuantity"];
+      // 如果含有子项或者已经处于沽清状态，不显示进度
+      if(childrenArray.length > 0 || newObject["isEstimate"] == 1){
+        newObject["isShowProgressQuantity"] = 0;
+      }
+    }else{ // 不自动沽清、无限量供应
+      newObject["remainQuantity"] = 99999;
+    }
+    newObject["confirmMenuObject"] = {};
+    newObject["currentRemainQuantity"] = newObject["remainQuantity"];
+    newObject["selectedItems"] = [];// 选择项 ,口味和规格均放在这里
+    return newObject;
+  },
+  translateSetMeal: function (serverObject) {// 套餐
+    if(!serverObject) return null;
+    var setMeal = this.translate(serverObject,"SetMeal");
+    return setMeal;
+  },
+  translateChildMenu:function(serverObject){ // 子项
+    if(!serverObject) return null;
+    var childMenu = this.translate(serverObject,"ChildMenu");
+    childMenu["selected"] = 0;
+    return childMenu;
+  },
+  translateSpecification:function(serverObject){
+    if(!serverObject) return [];
+    var specificationArray = [];
+    if(serverObject){
+      serverObject.split("；").forEach(function(element,index){
+        if(element != ""){
+          specificationArray.push({"name":element,"selected":0,"index":index});
+        }
+      });
+    }
+    return specificationArray;
+  },
+  translate:function(serverObject,mappingName){
+    var newObject = {};
+    for(var propertyName in serverObject){
+      var translatedPropertyName = Mapping[mappingName][propertyName];
+      if(translatedPropertyName){
+        newObject[translatedPropertyName] = serverObject[propertyName];
+      }
+    }
+    return newObject;
+  }
+}

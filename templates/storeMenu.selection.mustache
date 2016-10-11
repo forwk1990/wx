@@ -1,0 +1,64 @@
+<div id="menu-selection-box" style="display:none">
+	<div class="layer-box01" id="layer-selection-js" style="display:block" {{(el)->el.hammer()}}></div>
+	<div {{data 'menuVo'}} class="cert-lay" id="selection-lay-js" style="display:block;bottom:0px;z-index: 15;">
+        <div class="header">
+            <span class="title">{{name}}</span>
+            <span class="price">¥{{currentSelectedPrice}}</span>
+        </div>
+        <div class="selection">
+            <!--存在子项-->
+            {{#if isParent}}
+                <div class="category-area">
+                    <span class="title">请选择规格 : </span>
+                    <ul class="specification_ul">
+                        {{#each children}}
+                            <li class="specification_li">
+                                <div {{data 'child'}} type="child" class="border {{#selected}}item-selected{{/selected}}{{^selected}}item-no-selected{{/selected}}" {{(el)->el.hammer()}}>
+                                    {{name}}
+                                </div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+            <!--存在做法-->
+            {{#if specificationInfo.length}}
+                <div class="category-area">
+                    <span class="title">请选择口味 : </span>
+                    <ul class="specification_ul">
+                        {{#each specificationInfo}}
+                            <li class="specification_li">
+                                <div {{data 'specification'}} type="specification" class="border {{#selected}}item-selected{{/selected}}{{^selected}}item-no-selected{{/selected}}" {{(el)->el.hammer()}}>
+                                    {{name}}
+                                </div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+            <div class="category-area" style="height:19px;">
+                <span class="title">请选择数量 : </span>
+                <div class="quantity-area">
+                    <div class="but-box selection-minus" {{(el)->el.hammer()}}>
+                        <div class="maskOperate" {{#canMinus}}style="display:none;"{{/canMinus}}></div>
+                        <span class="minus"></span>
+                    </div>
+                        <span class='num'>
+                        {{^if quantity}}1{{/if}}
+                            {{#if quantity}}{{quantity}}{{/if}}
+                        </span>
+                    <div class="but-box selection-add" {{(el)->el.hammer()}}>
+                        <div class="maskOperate" {{#selectedOk}}style="display:none;"{{/selectedOk}}></div>
+                        <span class="add"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="position:absolute;bottom: 0px;width:100%;display:block;">
+                <div class="confirm" style="padding:15px;">
+                    <div class="mask" {{#selectedOk}}style="display:none;"{{/selectedOk}}></div>
+                    <div {{(el)->el.hammer()}} class="confirm-button" id="confirm-add-button">确认</div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>

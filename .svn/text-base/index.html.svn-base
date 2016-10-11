@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="www.bj-evetime.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>美食快点自助点餐</title>
+    <link rel="stylesheet" href="/~itachi/wx/stylesheets/combine.min.css?ver=2016070102"/>
+</head>
+<body>
+<div id="pagecontent" style="height:100%;">
+    <div class="overlay" style="display: block;"></div>
+    <div class="loadingBox">
+        <div class="box-loading" style="margin-left: -90px; width: 180px;">
+            <div class="pageLoading"></div>
+            <div class="context-loading">客官，请稍等……</div>
+        </div>
+    </div>
+</div>
+<script src="/~itachi/wx/javascripts/utils/config.js?ver=20160707"></script>
+<script src="/~itachi/wx/javascripts/utils/mapping.js?ver=20160707"></script>
+<script type="text/javascript">
+
+    // 1、非入口页面进入，放行，无需判断是否授权
+    // 2、入口页进入，判断是否已经授权
+    // 获取url参数
+    function getQueryStringValue(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+
+    function authorize (payPageUrl) {
+        payPageUrl = window.location.origin + Config.wapcontext + payPageUrl;
+        var authorizeUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + Config.WX.appId + "&redirect_uri=" + payPageUrl + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        window.location.href = authorizeUrl;
+    }
+
+    var pathname = window.location.pathname;
+    if (pathname.indexOf(Config.entryPage) >= 0) {
+        var code = getQueryStringValue("code");
+        if (!code) {// 未授权，先取得必要信息，然后跳转
+            var timestamp = getQueryStringValue("t_random");
+            // 未加上时间戳，强行加
+            if (!timestamp) {
+                window.location.href = window.location.href + "&t_random=" + Math.random();
+                console.log("window.location.href 跳转");
+            } else {// 有时间戳，截取商家信息并保存
+                var tableInfo = {
+                    cloudId: getQueryStringValue("res"),
+                    tableId: getQueryStringValue("tableid"),
+                    type: getQueryStringValue("type"),
+                    ver:getQueryStringValue("ver"),
+                    pay:getQueryStringValue("pay"),
+                }
+                localStorage.setItem("tableInfo",JSON.stringify(tableInfo));
+                // 调试模式不需要授权
+                if(!Config.Debug){
+                    authorize(Config.entryPage);
+                }
+            }
+        }
+    }
+
+</script>
+<script src="/~itachi/wx/javascripts/libs/jweixin/jweixin.min.js"></script>
+<script src="/~itachi/wx/javascripts/utils/combine.min.js"></script>
+<script data-main="/~itachi/wx/javascripts/app.js" src="/~itachi/wx/javascripts/libs/requirejs/require.js"></script>
+<link rel="stylesheet" href="/~itachi/wx/stylesheets/css.css?ver=20160707"/>
+</body>
+</html>

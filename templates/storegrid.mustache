@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="{{wapper}}stylesheets/storegrid.css">
+<div id="wrapper-main">
+    <div class="wrapper-new-header">
+        <span class="title-logo"></span>{{selectedStore.storename}}<span class="header-search" {{(el)->el.hammer()}}></span>
+    </div>
+    <div id="wrapper-box-js" class="wrapper-content">
+        <div id="holder" class="store-grid-holder">
+            <span class="category" style="width:50%;"></span>
+            <span class="category-menu" {{(el)->el.hammer()}}></span>
+        </div>
+        <ul id="searchlist" class="list_body change-backcolor square-pic-ul">
+            {{#each storeMenuList}}
+                <li class="square-pic-list category-title-new" topType="{{topType}}">{{sectionTitle}}</li>
+                {{#each foodInfo}}
+                <li topType="{{topType}}" {{#isHideMarginBottom}}style="margin-bottom:0px"{{/isHideMarginBottom}} class="square-pic-list {{className}}" {{data 'menuVo'}} systemId='{{systemId}}' >
+                    <div class="card-border">
+                        <div class="square-pic-list-div" {{(el)->el.hammer()}}>
+                            <img systemId='{{systemId}}' onerror="this.onerror=null;this.src=Config.wapcontext+'images/no_pic_60_60.png'"
+                                 src="{{wapper}}images/no_pic_60_60.png" real_src="{{midImgPath}}">
+                            <span class="title">{{trim name}}</span>
+                        </div>
+                        <div class="product-content-box">
+                            <div class="square-pic-list-price">
+                                <span class="product-price1 price-changefontsize" {{#isSetMeal}}style="display:none"{{/isSetMeal}}>
+                                    ¥{{price}}
+                                    {{#isDiscount}}
+                                        <span style="font-size:12px;text-decoration: line-through;color:#bcbcbc;">原价:{{originalPrice}}</span>
+                                    {{/isDiscount}}
+                                    <!--<span class="big-price" {{#isSetMeal}}style="display:none"{{/isSetMeal}}>{{bigPrice}}</span>
+                                    <span class="small-price" {{#isSetMeal}}style="display:none"{{/isSetMeal}}>.{{smallPrice}}</span>-->
+                                </span>
+                            </div>
+                            <div class="add-minus-quantity">
+                                <div class="button-box" {{^quantity}}style="display:none"{{/quantity}}>
+                                    <span class="minus-quantity" {{(el)->el.hammer()}}></span>
+                                </div>
+                                <span class="quantity" {{^quantity}}style="display:none"{{/quantity}}>{{quantity}}</span>
+                                <div class="button-box">
+                                    <span class="add-quantity" {{(el)->el.hammer()}}></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
+            {{/each}}
+        </ul>
+    </div>
+
+    <div class="shopping-cart-layer" style="bottom:-100px" {{isShowCartBar}}>
+        <div class="shopping-cart-background"></div>
+        <div class="shopping-cart-box">
+            <div id="cart-animate" class="shopping-cart-animate">
+                <div class="shopping-cart-img" id="orderCart" can-tap="triggerCart" {{(el)->el.hammer()}}>
+                    <div class="shopping-cart-num" {{^totalNumForShow}}style="display:none"{{/totalNumForShow}}>{{totalNumForShow}}</div>
+                </div>
+            </div>
+            <div class="shopping-cart-total" can-tap="triggerCart" {{(el)->el.hammer()}}>￥{{totalPriceForShow}}</div>
+            <span id="settlement" class="shopping-cart-pay" {{(el)->el.hammer()}} can-tap="settlement">选好了</span>
+            <div class="shopping-cart-tips"></div>
+        </div>
+    </div>
+
+    <div class="type-category-div" style="display:none;width:165px;">
+        <div class="layer-box01" id="layer-catetory-menu-js" style="display:block" {{(el)->el.hammer()}}></div>
+        <div class="type-category-menu-div">
+            <span class="type-category-close" {{(el)->el.hammer()}}></span>
+            <div class="type-category-menu-ul">
+                <ul>
+                    {{#each menuTypeList}}
+                        <li class="type-category-menu-li" topType="{{topType}}" {{(el)->el.hammer()}} {{data 'typeVo'}}>
+                            <span class="menu-type-title">{{title}}</span>
+                            <span class="navigate-to-type"></span>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>

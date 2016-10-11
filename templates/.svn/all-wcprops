@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/msIOS/!svn/ver/634/wx/templates
+END
+storeinfo.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/msIOS/!svn/ver/634/wx/templates/storeinfo.mustache
+END
+storeMenu.selected.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/msIOS/!svn/ver/634/wx/templates/storeMenu.selected.mustache
+END
+mydines.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/msIOS/!svn/ver/634/wx/templates/mydines.mustache
+END
+storeMenu.setMeal.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/msIOS/!svn/ver/634/wx/templates/storeMenu.setMeal.mustache
+END
+storelist.popWindow.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/msIOS/!svn/ver/634/wx/templates/storelist.popWindow.mustache
+END
+storeMenu.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/msIOS/!svn/ver/634/wx/templates/storeMenu.mustache
+END
+storesearch.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/msIOS/!svn/ver/634/wx/templates/storesearch.mustache
+END
+storeMenu.cartInfo.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/msIOS/!svn/ver/634/wx/templates/storeMenu.cartInfo.mustache
+END
+storemenu.search.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/msIOS/!svn/ver/634/wx/templates/storemenu.search.mustache
+END
+ordertallyup.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/msIOS/!svn/ver/634/wx/templates/ordertallyup.mustache
+END
+queuecertificate.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/msIOS/!svn/ver/634/wx/templates/queuecertificate.mustache
+END
+storelist.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/msIOS/!svn/ver/634/wx/templates/storelist.mustache
+END
+enqueuedetail.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/msIOS/!svn/ver/634/wx/templates/enqueuedetail.mustache
+END
+storeinfo.popWindow.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/msIOS/!svn/ver/634/wx/templates/storeinfo.popWindow.mustache
+END
+orderdetail.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/msIOS/!svn/ver/634/wx/templates/orderdetail.mustache
+END
+store_mapbooking.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/msIOS/!svn/ver/634/wx/templates/store_mapbooking.mustache
+END
+storegrid.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/msIOS/!svn/ver/634/wx/templates/storegrid.mustache
+END
+ordersuccess.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/msIOS/!svn/ver/634/wx/templates/ordersuccess.mustache
+END
+storeMenu.selection.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/msIOS/!svn/ver/634/wx/templates/storeMenu.selection.mustache
+END
+storeMenu.popWindow.mustache
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/msIOS/!svn/ver/634/wx/templates/storeMenu.popWindow.mustache
+END

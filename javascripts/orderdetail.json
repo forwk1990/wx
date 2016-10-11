@@ -1,0 +1,21 @@
+{
+    "restaurantName": "103创业咖啡",
+    "restaurantUrl": "http://bj-evetime.oss-cn-shenzhen.aliyuncs.com/foodimage/ab04e810-22c0-4915-b47c-68ea7b9a4700/64f523c5-b057-4f4b-905c-bbe97eddcf4b.jpg",
+    "foodChoice": [
+      {
+        "foodPrice": 0.01,
+        "foodCount": 4,
+        "foodName": "摩卡1"
+      },
+      {
+        "foodPrice": 0.01,
+        "foodCount": 5,
+        "foodName": "摩卡2"
+      },
+      {
+        "foodPrice": 0.01,
+        "foodCount": 15,
+        "foodName": "摩卡3"
+      }
+    ]
+}

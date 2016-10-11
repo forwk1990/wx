@@ -1,0 +1,39 @@
+<!--选择时间开始-->
+	<link rel="stylesheet" href="{{appendContext 'stylesheets/mobicroll.css'}}"/>
+	<div id="time_select_map" class="xuan-time mapmo xuan-time-js animated fadeIn" style="display:block;{{infowidth}}" index='{{_index}}'  storeCode="{{store.storecode}}">
+		<span class="jiant02"></span>
+    	<div class="mode" style="{{infowidth}}">
+            <h4>{{store.storename}}</h4>
+            <p>{{store.address}}</p>
+           <!-- <span><font>0.1</font> 公里</span>-->
+        </div>
+        <div id="select">
+			<h4>取餐时间:<span class="pickTime"></span></h4>
+			<p class="on time01-js" {{(el)->el.hammer()}}>现在，支付成功后<span class="on">5分钟</span>左右可取餐<input type="text" name="test_default" id="test_default" style="width:1px;height:1px;z-index:-1"/></p>
+			<p class="time02-js" {{(el)->el.hammer()}}>稍晚，预约今天晚些时候取餐</p>
+			<p class="time03-js" style="display:none;" {{(el)->el.hammer()}}>稍晚，<span class="other-on" {{(el)->el.hammer()}}>预约今天 <span>18:30&nbsp;&nbsp;&nbsp;&nbsp;</span> 取餐</span></p>
+			<p class="time04-js" style="display:none;" {{(el)->el.hammer()}}>稍晚，支付成功后的</p>
+			<!--其他时间开始-->
+			<div class="time-table time-table-js" style="display:none;">
+				<div class="box">
+					<!--
+			    	<ul class="tablecss tablecss-js">
+			        	<li class="small line-r on" minute="10" {{(el)->el.hammer()}}>10分钟</li>
+			            <li class="small line-r"  minute="20" {{(el)->el.hammer()}}>20分钟</li>
+			            <li class="small"  minute="30" {{(el)->el.hammer()}}>30分钟</li>
+			            <li class="long line-t" {{(el)->el.hammer()}} style="text-align: center;">今天其他时间</li>
+			        </ul>
+			        -->
+			        <span class="pickTime" pick="18:00">取餐时间大约为 </span>
+			        <div class="time-o-b" id="enter_menu" {{(el)->el.hammer()}}>进入菜单</div>
+			    </div>
+			</div>
+			<!--其他时间结束/-->
+			<div class="time-b time-b-js">
+				<div class="box"><span id="enter_menu" {{(el)->el.hammer()}} >进入菜单</span></div>
+			</div>
+			<div class="tips" style="width: 95%;">提示：根据您实际完成的支付时间。您指定的取餐时间可能顺延</div> 
+		</div>
+	</div>
+
+<!--选择时间结束/--> 

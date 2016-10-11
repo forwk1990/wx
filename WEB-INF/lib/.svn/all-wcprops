@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/msIOS/!svn/ver/634/wx/WEB-INF/lib
+END
+jsf-api.jar
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/msIOS/!svn/ver/634/wx/WEB-INF/lib/jsf-api.jar
+END
+urlrewritefilter-4.0.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/msIOS/!svn/ver/634/wx/WEB-INF/lib/urlrewritefilter-4.0.3.jar
+END
+jstl-impl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/msIOS/!svn/ver/634/wx/WEB-INF/lib/jstl-impl.jar
+END
+jsf-impl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/msIOS/!svn/ver/634/wx/WEB-INF/lib/jsf-impl.jar
+END
+javax.servlet.jsp.jstl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/msIOS/!svn/ver/634/wx/WEB-INF/lib/javax.servlet.jsp.jstl.jar
+END
+urlrewrite-3.2.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/msIOS/!svn/ver/634/wx/WEB-INF/lib/urlrewrite-3.2.0.jar
+END

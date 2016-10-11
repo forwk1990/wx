@@ -1,0 +1,19 @@
+<div id='paidui_cover' style="display:none">
+    <div class="layer-box02" id="layer-box02-js" style="display:block" {{(el)->el.hammer()}}></div>
+    <div class="pr-lay animated fadeIn" id="pr-lay-js" style="display:block">
+        <span class="close" id="pr-lay-close-js" {{(el)->el.hammer()}}></span>
+
+        <table class="paidui_box" {{data 'storeInfo'}}>
+            <thead><tr><th align="left">桌台类型</th><th align="right">等待桌数</th><th align="right">预计等待</th></tr></thead>
+            <tbody>
+                {{#each data}}
+                <tr><td class="first">{{tableName}}<span>( {{minPeople}}~{{maxPeople}}人 )</span></td><td><i>{{tableCount}}</i>桌</td><td>{{watime}}分钟</td></tr>
+                {{/each}}
+                <tr><td align="left" colspan="3"><input type="text"  value="" id="p_number" placeholder="请输入就餐人数" maxlength="3"/></td></tr>
+                <tr><td align="left" colspan="3"><input type="text" value="" id="telphone" placeholder="请输入手机号" maxlength="11"/></td></tr>
+            </tbody>
+            <tfoot><tr><td colspan="3"><div class="build"  id="build_voucher" {{(el)->el.hammer()}} data-disabled="false">立即取号</div></td></tr></tfoot>
+        </table>
+
+    </div>
+</div>

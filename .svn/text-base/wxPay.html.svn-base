@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <title>美食快点公众平台</title>
+    <link rel="stylesheet" href="/wx/stylesheets/common.css"/>
+    <link rel="stylesheet" href="/wx/stylesheets/css.css"/>
+    <link rel="stylesheet" href="/wx/stylesheets/animate.custom.css" />
+</head>
+<body onload="callpay();">
+<div id="pagecontent" style="height:100%;">
+    <div class="wrapper-head">
+        <div class="head-back" onclick="rePay();"></div>
+        微信支付
+    </div>
+    <div class="sec-jg"></div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    // 获取url参数
+    function getQueryStringValue(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2])
+        }
+        return null
+    }
+    //调用微信JS api 支付
+
+    function jsApiCall() {
+        //在微信内置浏览器中，微信支付
+        WeixinJSBridge.invoke('getBrandWCPayRequest', {
+            "appId": getQueryStringValue("appId"),
+            "timeStamp": getQueryStringValue("timeStamp"),
+            "signType": getQueryStringValue("signType"),
+            "package": getQueryStringValue("package"),
+            "nonceStr": getQueryStringValue("nonceStr"),
+            "paySign": getQueryStringValue("paySign")
+        }, function (res) {
+            console.info(res.err_msg);
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                window.location.href = "/wx/order/success";
+            } else {
+                window.location.href = "/wx/order/tallyup";
+            }
+            //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg 将在用户支付成功后返
+            // 回ok，但并不保证它绝对可靠。
+        });
+    }
+    function callpay() {
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        } else {
+            jsApiCall();
+        }
+    }
+    //返回重新支付
+    function rePay() {
+        window.location.href = "/wx/order/tallyup";
+    }
+</script>
+</html>
+

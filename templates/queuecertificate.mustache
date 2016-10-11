@@ -1,0 +1,36 @@
+<!--页面框架开始-->
+<div id="wrapper-main">
+    <!--页眉开始-->
+    <div class="wrapper-head">
+        <!--<div class="head-home" {{(el)->el.hammer()}}></div>-->
+        排队凭证
+    </div>
+    <!--页眉结束/-->
+    <div class="rest-box rest-box2" id="rest-box">
+        <div class="paidui_info">
+    {{#each voucherInfo}}
+        <div {{data 'queueInfo'}}>
+            {{#isShow}}
+                <ul class="{{className}}">
+                    <li class="name">{{restaurantName}}<span>（鲁磨路店）</span></li>
+                    <li class="table_number">{{queueCode}}</li>
+                    <li class="line">等待桌数<i>{{countIds}} 桌</i></li>
+                    <li class="line">预计等待<i>{{&watingTime}} 分钟</i></li>
+                    <li class="tip">
+                        {{#refresh}}收到提醒后请尽快前往餐厅，过号作废，需重新取号{{/refresh}}
+                        {{#canceled}}号单已取消{{/canceled}}
+                        {{#passed}}号单已过号，请重新排队{{/passed}}
+                    </li>
+                    <li class="state state_gost">
+                        {{#isValid}}<span class="cancel_btn" {{(el)->el.hammer()}}>取消</span>{{/isValid}}
+                        {{^isValid}}<span class="delete_btn" {{(el)->el.hammer()}}>删除单号</span>{{/isValid}}
+                    </li>
+                    {{#isValid}}<li class="ref_btn" {{(el)->el.hammer()}}></li>{{/isValid}}
+                </ul>
+            {{/isShow}}
+        </div>
+    {{/each}}
+        </div>
+    </div>
+</div>
+<!--页面框架结束/-->

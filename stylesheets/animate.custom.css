@@ -1,0 +1,70 @@
+@charset "UTF-8";
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.animated.fadeIn {
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+
+@keyframes zoomInout {
+    0% {
+        zoom: 1.0;
+    }
+    12.5%{
+        zoom: 1.1;
+    }
+    25%{
+        zoom: 1.2;
+    }
+    37.5%{
+        zoom: 1.1;
+    }
+    50%{
+        zoom: 1.0;
+    }
+    62.5% {
+        zoom: 0.9;
+    }
+    75%{
+        zoom: 0.8;
+    }
+    87.5%{
+        zoom: 0.9;
+    }
+    100%{
+        zoom: 1.0;
+    }
+}
+
+
+
+
+

@@ -1,0 +1,96 @@
+<!--页面框架开始-->
+<div id="wrapper-main">
+    <!--页眉开始-->
+    <div class="wrapper-head">
+        <!--<div class="head-home" {{(el)->el.hammer()}}></div>-->
+        我的用餐
+    </div>
+    <!--餐厅列表开始-->
+    <div id="mydines-box">
+        <div class="rest-list">
+            <div id="restaurant_list">
+                {{#each showItemList}}
+                <div class="itable">
+                    <div class="top"></div>
+                    <table>
+                        <thead>
+                        <tr><td colspan="3"><div class="name">{{restaurantName}}</div></td></tr>
+                        </thead>
+                        <tbody>
+                        <tr><th align="left">菜品名称</th><th>份数</th><th align="right">价格</th></tr>
+                        {{#each foodList}}
+                            <tr><td align="left">{{foodName}}</td><td style="font-size:18px" align="center">{{foodCount}}</td><td align="right">￥ {{total}}</td></tr>
+                        {{/each}}
+                        </tbody>
+                        <tfoot><tr><td colspan="3"><a href="http://www.bj-evetime.com/weixinDL.html" target="_blank" class="down_app" style="font-size:18px">更多详情请下载美食快点APP</a></td></tr></tfoot>
+                    </table>
+                    <div class="bottom"></div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="pull-box">
+                <div id="pullUp" style="display:none;">
+                    <span class="pullUpIcon"></span>
+                    <span id="pullUpLabel" class="pullUpLabel">上拉加载更多</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--餐厅列表结束/-->
+</div>
+<!--页面框架结束/-->
+<style type="text/css">
+   #mydines-box{
+       position: absolute;
+       right: 0;
+       left: 0;
+       top:44px;
+       background:#e6e7ec;
+   }
+   #restaurant_list{
+       padding: 20px 10px 0;
+   }
+   .itable{
+       margin-bottom:20px;
+   }
+   .itable table{
+       width: 100%;
+       border-collapse: collapse;
+       background: #fff;
+   }
+   .itable th,.itable td{
+        padding:10px;
+   }
+   .itable td{
+       color:#aaa;
+       font-weight: normal;
+   }
+    .down_app{
+        display:block;
+        padding:15px 0 5px;
+        color:#ea4b23;
+        border-top:1px solid #ccc;
+    }
+    .name{
+        padding:10px 0 15px;
+        color:#333;
+        font-size:22px;
+        border-bottom:1px solid #ccc;
+    }
+    .top{
+        height:6px;
+        font-size:1px;
+        background:url("images/ribg.gif") left top repeat-x;
+    }
+    .bottom{
+        height:6px;
+        font-size:1px;
+        background:url("images/ribg.gif") left bottom repeat-x;
+    }
+   .itable tbody td{
+       font-size:14px;
+   }
+   #mydines-box #pullUp{
+       background:none;
+   }
+</style>

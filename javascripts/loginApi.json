@@ -1,0 +1,65 @@
+{
+  "desc": "下单",
+  "parameters": {
+    "type": "",
+    "pay": "1",
+    "seatId": "",
+    "cloudId": "",
+    "totalPrice": 12,
+    "openId": "",
+    "device": "weixin",
+    "phone": "",
+    "payMethod": "3",
+    "foodInfo": [
+      {
+        "foodNum": 1,
+        "id": "19f96e58-ed35-4461-a5f8-c2ebc886c171",
+        "taste": "",
+        "suitFoodType": 1,
+        "items": [
+          {
+            "id": "5458eb0b-9e3f-4dde-8373-13847f883c18",
+            "name": "热干面",
+            "quantity": 1
+          },
+          {
+            "id": "66de0954-309f-47ac-93f3-3e7645d36050",
+            "name": "大碗鸡汤",
+            "quantity": 1
+          },
+          {
+            "id": "ee69c3b3-72bd-47fd-9e4c-5150099651b6",
+            "name": "日本豆腐",
+            "quantity": 2
+          },
+          {
+            "id": "5b083d02-d586-4744-93c3-da0487b821ee",
+            "name": "香菇焖肉",
+            "quantity": 2
+          },
+          {
+            "id": "717d94db-c7cf-4157-af07-18a7bceea6ba",
+            "name": "好好吃",
+            "quantity": 2
+          }
+        ]
+      },
+      {
+        "foodNum": 1,
+        "id": "e9f95e58-ed35-4461-a5f8-c2ebc886c171",
+        "taste": "白灼",
+        "suitFoodType": 1,
+        "items": []
+      }
+    ],
+    "orderRemarks": ""
+  },
+  "response": {
+
+  }
+}
+
+
+
+
+

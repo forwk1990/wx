@@ -1,0 +1,50 @@
+{
+  "desc": "获取菜品信息",
+  "parameters": {
+    "userName": "admin",
+    "password": "123"
+  },
+  "response": {
+    "success":1,
+    "message":"成功",
+    "data":{
+      "restaurantName": "黄记煌",
+      "cloudID": "a5339c3b3-72bd-47fd-9e4c-5150099651b2",
+      "waiterID": "f789c3b3-72bd-47fd-9e4c-5150099651b6",
+      "waiterName": "服务员012",
+      "tables": [
+        {
+          "name": "小桌",
+          "tables": [
+            {
+              "name": "A01",
+              "tableID": "e789c3b3-72bd-47fd-9e4c-5150099651b6"
+            },
+            {
+              "name": "A02",
+              "tableID": "e589c3b3-72bd-47fd-9e4c-5150099651b2"
+            }
+          ]
+        },
+        {
+          "name": "大桌",
+          "tables": [
+            {
+              "name": "B01",
+              "tableID": "d789c3b3-72bd-47fd-9e4c-5150099651b6"
+            },
+            {
+              "name": "B02",
+              "tableID": "a589c3b3-72bd-47fd-9e4c-5150099651b2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+
+
+
+

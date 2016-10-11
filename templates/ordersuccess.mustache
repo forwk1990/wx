@@ -1,0 +1,113 @@
+<!--页面框架开始-->
+<div id="wrapper-main" class="body-bg01">
+    <!--页眉开始-->
+    <div class="wrapper-head" style="display: none;">
+        <div class="head-back" style="display:none;"  {{(el)->el.hammer()}}></div>
+        下单成功
+    </div>
+    <!--页眉结束/-->
+
+    <!--主体开始-->
+    <div class="pay-box" class="body-bg01" style="margin-top:0px;">
+
+        <!-- 订单详情 -->
+        <div class="order-info">
+
+            <!-- 顶部下单成功界面 -->
+            <div class="order-top">
+                <span class="suc-icon"></span>
+                <span class="text-t"><span class="themeColor">{{order.tableInfo}}</span>&nbsp;下单成功!</span>
+                <span class="text-b">稍等，美食马上为您送来~</span>
+            </div>
+
+            <!-- 下单时间 -->
+            <div class="order-time">
+                <div class="order-info-left">
+                    <span>下单时间</span>
+                </div>
+                <div class="order-info-right">
+                    <span>{{DateTime order.time}}</span>
+                </div>
+            </div>
+
+            <!-- 订单号 -->
+            <div class="order-number">
+                <div class="order-info-left">
+                    <span>订单号码</span>
+                </div>
+                <div class="order-info-right">
+                    <span>{{order.orderNumber}}</span>
+                </div>
+            </div>
+
+            <div class="order-phone">
+                <div class="order-info-left">
+                    <span>手机号码</span>
+                </div>
+                <div class="order-info-right">
+                    <span>{{order.phoneNumber}}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 菜单详情 -->
+        <div class="pay-list-box">
+            <ul class="pay-list-con">
+                <li class="payli-num-js">
+                    <div class="pr-til  prxx-js" style="width:60%;">
+                        合计(共<span style="color:#ff6326;float:none;">{{order.items.length}}</span>件 消费<span
+                            style="color:#ff6326;clear:both;float:none;">￥{{money2 order.total}}</span>)
+                    </div>
+                    <div class="pr-num">
+                        <span class='num' style="width:100%;font-size: 14px;" {{(el)->el.hammer()}}
+                              can-tap="toggleExpand">
+                            展开详情<span class="expandDetail {{#isExpand}}rotate{{/isExpand}}"></span></span>
+                    </div>
+                </li>
+                {{#each order.items}}
+                    <li type="menu"
+                        class="payli-num-js" {{data 'orderItem'}} {{^isExpand}}style="display:none;"{{/isExpand}}>
+                        <div class="pr-til  prxx-js">
+                    	<span>{{trim name}}
+                        </span>
+                        </div>
+                        <div class="pr-pri" style="width:30%">
+                            ￥{{money2 price}}/份 x {{quantity}}
+                        </div>
+                        <div class="pr-num">
+                            <span class='num' style="width:100%;font-size: 14px;">￥{{money2 totalPrice}}</span>
+                        </div>
+                    </li>
+                {{/each}}
+                <li class="payli-num-js">
+                    <div class="pr-til  prxx-js" style="color:#ea4b23;">
+                        备注
+                    </div>
+                    <div class="pr-num">
+                        <span class='num' style="width:100%;font-size: 14px;">
+                            <span>{{order.orderRemarks}}</span></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div style="clear:both;padding-top:20px;">
+            <span style="font-size:14px;">长按二维码关注美食快点平台<br>随时获取订单最新信息</span>
+            <img src="{{wapper}}images/qrcode.jpg" class="qrcode"></img>
+        </div>
+    </div>
+    <!--主体结束/-->
+    <!--购物车开始/-->
+    <div class="order-layer">
+        <div class="order-bg"></div>
+        <div class="order-box">
+            <!--<div class="order-pri order-pri-ml"><span class="left">温馨提示：索要发票请至商家前台</span></div>-->
+            <div class="order-pri order-pri-ml" style="border:0px;margin-left:0px;">
+                <span class="left" style="text-align: left;line-height:30px;font-size:14px;">索要发票请至商家前台</span>
+            </div>
+            <span class="pay-b" {{(el)->el.hammer()}} can-tap="finish">完成</span>
+        </div>
+    </div>
+    <!--购物车结束/-->
+</div>
+<!--页面框架结束/-->

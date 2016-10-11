@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE urlrewrite
+	PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+	"http://www.tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<urlrewrite>
+	<rule>
+		<from>^/web/first.html$</from>
+		<to>http://192.168.31.192:8088/web/index.html</to>
+	</rule>
+	<rule>
+		<note>首页</note>
+		<from>^/web/video.html$</from>
+		<to type="forward">/web/index.html</to>
+	</rule>
+	<rule>
+		<from>^/user/([a-z]+)/([0-9]+)$</from>
+		<to>/index.jsp?nickname=$1&amp;age=$2</to>
+	</rule>
+</urlrewrite>

@@ -1,0 +1,101 @@
+{
+  "suitInfo": {
+    "requireItems":[
+      {
+        "systemId":"",/**菜品主键**/
+        "name":"阿里旺旺",/**菜品名称**/
+        "quantity":1 /**菜品数量**/
+      },
+      {
+        "systemId":"",/**菜品主键**/
+        "name":"阿里旺旺",
+        "quantity":2
+      }
+    ],
+    "multipleItems":[
+      {
+        "categoryName":"主料",/**分类名称**/
+        "requireQuantity":2,/**必选数量**/
+        "items":[
+          {
+            "systemId":"",/**菜品主键**/
+            "name":"阿里旺旺",
+            "quantity":2,
+            "extendPrice":6 /**扩展价格（单个菜品加价）**/
+          }
+        ]
+      }
+    ]
+  }
+}
+
+
+
+{
+  "systemId": "779a2170-f970-44fb-9dd1-351930598e8c",
+  "name": "滋乐滋乐",
+  "todaySale": 542734.17,
+  "imgUrl" : "",
+  "branchList": [
+    {
+      "systemId": "779a2170-f970-44fb-9dd1-351930598e8c",
+      "name": "光谷天地",
+      "todaySale": 54273.417,
+      "percent" :10
+    },
+    {
+      "systemId": "779a2170-f970-44fb-9dd1-351930598e8c",
+      "name": "傅家坡",
+      "todaySale": 124828.859,
+      "percent" :23
+    },
+    {
+      "systemId": "779a2170-f970-44fb-9dd1-351930598e8c",
+      "name": "复兴路",
+      "todaySale": 200811.643,
+      "percent" :37
+    },
+    {
+      "systemId": "779a2170-f970-44fb-9dd1-351930598e8c",
+      "name": "阅马场",
+      "todaySale": 54273.417,
+      "percent" :10
+    },
+    {
+      "systemId": "779a2170-f970-44fb-9dd1-351930598e8c",
+      "name": "江汉路",
+      "todaySale": 108546.834,
+      "percent" :20
+    }
+  ],
+  "weekSaleList": [
+    {
+      "date": "06-10",
+      "sale": 442734.17
+    },
+    {
+      "date": "06-11",
+      "sale": 542734.17
+    },
+    {
+      "date": "06-12",
+      "sale": 502734.17
+    },
+    {
+      "date": "06-13",
+      "sale": 500034.17
+    },
+    {
+      "date": "06-14",
+      "sale": 482734.17
+    },
+    {
+      "date": "06-15",
+      "sale": 432734.17
+    },
+    {
+      "date": "06-15",
+      "sale": 242734.17
+    }
+  ]
+}

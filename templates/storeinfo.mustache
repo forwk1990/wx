@@ -1,0 +1,35 @@
+<!--页面框架开始-->
+<div id="wrapper-main">
+    <div class="wrapper-head">
+        <div class="head-home" {{(el)->el.hammer()}}></div>
+        <div class="head-sec" {{(el)->el.hammer()}}></div>
+        <h1 class="pagetitle">{{showItemList.restaurantName}}{{showItemList.branchName}}店</h1>
+    </div>
+    <div class="table_box">
+         {{#if showItemList.countTable}}
+            <table class="paidui_box">
+                <thead><tr><th>桌台类型</th><th>等待桌数</th><th>预计等待</th></tr></thead>
+                <tbody>
+                {{#each showTableInfo}}
+                    <tr><td class="first">{{tableName}}<br><span>{{maxPeople}}</span></td><td><i>{{count}}</i><span>桌</span></td><td>{{&avgTime}}<br><span>分钟</span></td></tr>
+                {{/each}}
+                </tbody>
+            </table>
+            <div class="build"  id="build_alert" {{(el)->el.hammer()}} data-disabled="false">立即取号</div>
+        {{/if}}
+        {{^if showItemList.countTable}}
+            <div class="buxuyao">
+                <h3>本店现在无需排队</h3>
+                快带上小伙伴来吧
+            </div>
+        {{/if}}
+        <ul class="store_info">
+            {{#if showItemList}}
+            <li>{{showItemList.typeName}}<span>¥{{showItemList.distance}}/人</span>营业时间：{{showItemList.shopHours}}</li>
+            <li class="address">{{showItemList.address}}</li>
+            <li class="tel">餐厅电话：<a href="tel:{{showItemList.tel}}">{{showItemList.tel}}</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</div>
+<!--页面框架结束/-->

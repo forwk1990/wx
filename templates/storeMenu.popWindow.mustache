@@ -1,0 +1,76 @@
+<div id='pic_cover' style="display:none" {{data 'menuVo'}}>
+    <div class="layer-box02" id="layer-box02-js" style="display:block" {{(el)->el.hammer()}}></div>
+    <div class="pr-lay animated fadeIn" id="pr-lay-js" style="display:block;" systemId="{{systemId}}">
+        <div class="wrapper-head">
+            <div class="head-back" id="pr-lay-close-js"  {{(el)->el.hammer()}}></div>
+            {{trim name}}
+        </div>
+        <div class="order-detail-content" id="popContent" {{(el)->el.hammer()}}>
+            <div class="img-box" style="overflow: hidden">
+                <img style="width:100%;height:100%;" real_src="{{bigImageUrl}}" src="{{imageUrl}}" onerror="this.onerror=null;this.src={{imageUrl}}">
+            </div>
+            <div class="pr-pri">{{price}}<span>元/份</span></div>
+            <div class="pr-num" style="margin-right:5px;margin-top:0px;">
+                {{#isEstimate}}
+                    <span class="estimate-text">已售罄</span>
+                {{/isEstimate}}
+                {{^isEstimate}}
+                    {{#quantity}}
+                        <div class="but-box listMinus" {{(el)->el.hammer()}}>
+                            <span class="minus"></span>
+                        </div>
+                        <span class='num'>{{quantity}}</span>
+                    {{/quantity}}
+                    <div class="but-box listAdd" {{(el)->el.hammer()}}>
+                        <span class="add"></span>
+                    </div>
+                {{/isEstimate}}
+            </div>
+            {{#if setMealFlag}}
+                <div class="desc"><span>套餐详情</span></div>
+                <div class="descContent">
+                    {{#each setMealInfo.multipleItems}}
+                        <div class="category-area" style="padding-bottom:0px;padding-top:0px;">
+                            <span class="title" style="font-weight: bold;">{{categoryName}}(任选{{requireQuantity}}款)</span>
+                            <ul>
+                                {{#each items}}
+                                    <li class="check_item" style="border-bottom:0px;" {{(el)->el.hammer()}}>
+                                        <span>{{name}}</span>
+                                        <span style="float:right;">x{{quantity}}</span>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/each}}
+                    <!--存在做法-->
+                    {{#if setMealInfo.requireItems.length}}
+                        <div class="category-area" style="padding-top:0px;">
+                            <span class="title" style="font-weight: bold;">必选</span>
+                            <ul style="display:block;">
+                                {{#each setMealInfo.requireItems}}
+                                    <li style="border-bottom:0px;">
+                                        <span>{{name}}</span>
+                                        <span style="float:right;">x{{quantity}}</span>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                </div>
+            {{/if}}
+            <div class="desc"><span>商品介绍</span></div>
+            <div class="descContent">
+                {{#if description}}
+                <span  style="padding-bottom:15px;">{{trim description}}</span>
+                {{/if}}
+                {{^if description}}
+                <span style="padding-bottom:15px;">该商品暂无介绍</span>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+
+</style>

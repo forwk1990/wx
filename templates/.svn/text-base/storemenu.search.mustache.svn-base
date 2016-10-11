@@ -1,0 +1,149 @@
+<!--页面框架开始-->
+<div id="wrapper-main">
+    <!--页眉开始-->
+    <div class="wrapper-head">
+        <!--餐厅搜索开始-->
+        <div class="sec-box">
+            <div class="box">
+                <div class="sec-input" {{(el)->el.hammer()}} id="InputB">
+                    <form id="formSearch" action="" onsubmit="e.preventDefault();return false;">
+                        <input type="text" style="display:none"/>
+                        <input name="key" type="input" can-enter='{searchByKey}' can-value="searchKey" value=""
+                               id="searchKey"
+                               placeholder="请输入菜品名称、简码、编号" maxlength="20">
+                    </form>
+                    <span class="clear-button" {{(el)->el.hammer()}} can-tap="clearSearch"
+                          {{^showClearInput}}style="display:none;"{{/showClearInput}}></span>
+                    <span class="search-button" {{(el)->el.hammer()}} can-tap="searchByKey"></span>
+                </div>
+            	<span style="width: 30px;height: 30px;position: absolute;left: 5px;top:7px;background: url({{wapcontext}}images/search-close.png) no-repeat center center;background-size: 15px 15px;"
+                    {{(el)->el.hammer()}} can-tap="closeSearch"></span>
+            </div>
+        </div>
+        <!--餐厅搜索结束/-->
+    </div>
+
+    <!--页眉结束/-->
+    <div class="wrapper-box" id="wrapper-box-js" style="margin-top:44px;top:44px;">
+        <div class="carte-box" style="margin-top:10px;width:100%;{{^searchResult}}display:none;{{/searchResult}}">
+            <ul class="menulist">
+                {{#each searchResult}}
+                    <li  {{data 'menuVo'}} systemId='{{systemId}}' type="{{type}}">
+                        <div class="li-line">
+                            <div class="pr-box pr-box-js">
+                                <div class="pr-pic" {{(el)->el.hammer()}}>
+                                    <img onerror="this.onerror=null;this.src=Config.wapcontext+'images/no_pic_60_60.png'"
+                                         src="{{wapcontext}}images/no_pic_60_60.png" real_src="{{imageUrl}}">
+                                </div>
+                                <p class="j-height">{{trim name}}</p>
+
+                                <p class="j-height"
+                                   style="max-height: 38px;font-size:12px;color:#999;margin-top:4px;line-height: 21px;">
+                                    {{trim description}}
+                                    {{#isShowProgressQuantity}}
+                                        <br/>
+                                        该产品仅剩<span style="color:#EA4B23;">{{remainQuantity}}</span>份
+                                    {{/isShowProgressQuantity}}
+                                </p>
+                            </div>
+                            <div class="pr-bos">
+                                <div class="pr-pri">
+                                    {{#isDiscount}}
+                                        ¥{{price}}<span
+                                            style="text-decoration: line-through;">原价:¥{{originalPrice}}</span>
+                                    {{/isDiscount}}
+                                    {{^isDiscount}}
+                                        ¥{{price}}<span style="text-decoration: line-through;"></span>
+                                    {{/isDiscount}}
+                                </div>
+                                <div class="pr-num">
+                                    {{#isEstimate}}
+                                        <span class="estimate-text">已售罄</span>
+                                    {{/isEstimate}}
+                                    {{^isEstimate}}
+                                        <div class="but-box listMinus" {{(el)->el.hammer()}} {{^quantity}}style="display:none"{{/quantity}}>
+                                            <span class="minus"></span>
+                                        </div>
+                                            <span class='num'
+                                                  {{^quantity}}style="display:none"{{/quantity}}>{{quantity}}</span>
+
+                                        <div class="listAdd but-box" {{(el)->el.hammer()}}>
+                                            <span class="add"></span>
+                                        </div>
+                                    {{/isEstimate}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+
+    <!--购物车开始-->
+    <div class="order-layer" style="bottom:-100px" {{isShowCartBar}}>
+        <div class="order-bg"></div>
+        <div class="order-box">
+            <div id="cart-animate" class="cart-animate">
+                <div class="ceart-img" id="orderCart" can-tap="triggerCart" {{(el)->el.hammer()}}>
+                    <div class="ceart-num">{{totalNumForShow}}</div>
+                </div>
+            </div>
+            <div class="order-pri" can-tap="triggerCart" {{(el)->el.hammer()}}
+                 style="{{#isTotalDiscount}}line-height:18px;{{/isTotalDiscount}}">
+                ￥{{totalPriceForShow}}
+                <br/><span
+                    style="font-size:12px;text-decoration: line-through;">原价:￥{{totalOriginalPriceForShow}}</span>
+            </div>
+            <span id="settlement" class="pay-b" {{(el)->el.hammer()}} can-tap="settlement">选好了</span>
+
+            <div class="order-tips"></div>
+        </div>
+    </div>
+    <!--购物车结束-->
+
+    <div class="sec-jg" id="sec-jg">
+        <!--历史记录开始-->
+        <div class="hos-box" id="hos-box-js" {{^searchRecord}}style="display:none;"{{/searchRecord}}>
+            <ul>
+                {{#each searchRecord}}
+                    <li id="recordkey" recordkey="{{searchKey}}" {{(el)->el.hammer()}}>{{searchKey}}</li>
+                {{/each}}
+                <li><span id="clear" {{(el)->el.hammer()}}>清空历史记录</span></li>
+            </ul>
+        </div>
+        <!--历史记录结束/-->
+
+        <div class="search-lading-area" {{^searchSuggestion}}style="display:none;"{{/searchSuggestion}}>
+            <ul class="search-landing-keywords">
+                {{#each searchSuggestion}}
+                    <li {{data 'searchItem'}} searchland_index="0"
+                                              id="searchland_li_{{firstLevelIndex}}_{{secondLevelIndex}}"
+                                              style="display: block;" class="search-landing-li"  {{(el)->el.hammer()}}>
+                        <a href="javascript:void(0);">
+                            <i class="search-result-icon search-shop-icon" style="
+                                    margin-top: 9px;width: 16px;height: 16px;display: block;
+                                    background: url('{{wapcontext}}images/sec.png') no-repeat;
+                                    background-size: 16px 16px;
+                                    float: left;
+                                    margin-left: 12px;
+                                    margin-right: 12px;
+                                    font-size: 0;"></i>
+                            <span class="search-landing-entry">{{name}}</span>
+                        </a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+
+
+        <div class="rest-list" id="rest-un-js" style="display:none;">
+            <div class="no-as">
+                <p>抱歉，未找到相关菜品</p>
+            </div>
+        </div>
+        <!--搜索结果结束/-->
+    </div>
+
+</div>
+<!--页面框架结束/-->

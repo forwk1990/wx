@@ -1,0 +1,65 @@
+<!--页面框架开始-->
+<div id="wrapper-main">
+	<!--页眉开始-->
+	<div class="wrapper-head">
+        <!--餐厅搜索开始-->
+        <div class="sec-box">
+            <div class="box">
+                <div class="sec-input" {{(el)->el.hammer()}} id="InputB">
+                    <form id="formSearch" action="" onsubmit="e.preventDefault();return false;">
+                        <input type="text" style="display:none"/>
+                        <input name="key" type="search" can-enter='{searchByKey}' can-value="searchKey" value=""
+                               id="searchKey"
+                               placeholder="请输入餐厅名称" maxlength="20">
+                    </form>
+                    <span class="clear-button" {{(el)->el.hammer()}} can-tap="clearSearch" {{^showClearInput}}style="display:none;"{{/showClearInput}}></span>
+                    <span class="search-button" {{(el)->el.hammer()}} can-tap="searchByKey"></span>
+                </div>
+            	<span style="width: 30px;height: 30px;position: absolute;left: 5px;top:5px;background: url({{wapper}}images/search-close.png) no-repeat center center;background-size: 15px 15px;"
+                    {{(el)->el.hammer()}} can-tap="closeSearch"></span>
+            </div>
+        </div>
+        <!--餐厅搜索结束/-->
+	</div>
+	<!--页眉结束/-->
+    <div class="sec-jg" id="sec-jg">
+		<!--搜索结果开始-->
+		<div class="rest-list" id="rest-on-js" style="display:none;">
+            <ul id="restaurant_list">
+        		{{#each showItemList}}
+            	<li class="rest-li-js" {{data 'storeInfo'}}>
+                    <div class="box" {{(el)->el.hammer()}}>
+                        <img onerror="this.onerror=null;this.src=Config.wapcontext+'images/no_pic.png'"
+                             src="{{appendContext 'images/no_pic.png'}}" real_src="{{imgPath}}" alt="{{restaurantName}}"/>
+                        <h4>{{restaurantName}}{{#if branchName}}({{branchName}}){{/if}}</h4>
+                        <p><i>{{typeName}}</i><i>¥{{distance}}/人</i><i>20km</i></p>
+                        <span class="queues_info">需等待<i>{{countTable}}</i>桌</span>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>  
+            <div class="pull-box">
+            <div id="pullUp" style="display:none;">
+					<span class="pullUpIcon"></span><span id="pullUpLabel" class="pullUpLabel">上拉加载更多</span>
+			</div>
+			</div>
+		</div>
+		<!--历史记录开始-->
+		<div class="hos-box" id="hos-box-js" {{^searchRecord}}style="display:none;"{{/searchRecord}}>
+			<ul>
+			    {{#each searchRecord}}
+				<li id="recordkey" recordkey="{{searchKey}}" {{(el)->el.hammer()}}>{{searchKey}}</li> 
+			    {{/each}}
+				<li><span id="clear" {{(el)->el.hammer()}}>清空历史记录</span></li>
+			</ul>
+		</div> 
+		<!--历史记录结束/-->
+        <div class="rest-list" id="rest-un-js" style="display:none;">
+        	<div class="no-as">
+            	<p>抱歉，未找到相关餐厅</p>
+            </div>
+        </div>
+		<!--搜索结果结束/-->
+    </div>
+</div>
+<!--页面框架结束/-->

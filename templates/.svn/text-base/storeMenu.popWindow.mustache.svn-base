@@ -1,0 +1,55 @@
+<div id='pic_cover' style="display:none" {{data 'menuVo'}}>
+    <div class="layer-box02" id="layer-box02-js" style="display:block" {{(el)->el.hammer()}}></div>
+    <div class="pr-lay animated fadeIn" id="pr-lay-js" style="display:block;" systemId="{{systemId}}">
+        <div class="head">
+            <span class="title">{{trim name}}</span>
+            <span class="close" id="pr-lay-close-js" {{(el)->el.hammer()}}></span>
+        </div>
+        <div class="order-detail-content" id="popContent" {{(el)->el.hammer()}}>
+            <div class="img-box" style="overflow: hidden">
+                <img style="width:100%;height:100%;" real_src="{{bigImageUrl}}" src="{{imageUrl}}" onerror="this.onerror=null;this.src={{imageUrl}}">
+            </div>
+            <div class="pr-pri">{{price}}<span>元/份</span></div>
+            <div class="pr-num" style="margin-right:5px;margin-top:0px;">
+                {{#isEstimate}}
+                    <span class="estimate-text">已售罄</span>
+                {{/isEstimate}}
+                {{^isEstimate}}
+                    {{#quantity}}
+                        <div class="but-box listMinus" {{(el)->el.hammer()}}>
+                            <span class="minus"></span>
+                        </div>
+                        <span class='num'>{{quantity}}</span>
+                    {{/quantity}}
+                    <div class="but-box listAdd" {{(el)->el.hammer()}}>
+                        <span class="add"></span>
+                    </div>
+                {{/isEstimate}}
+            </div>
+            {{#if setMealFlag}}
+                <div class="desc"><span>套餐详情</span></div>
+                <table style="width: 100%;font-size: 12px;padding:0 10px;">
+                    {{#each setMealInfo}}
+                    <tr style="height:22px;">
+                        <td align="left">{{name}}</td>
+                        <td align="right">{{count}}{{unitName}}</td>
+                    </tr>
+                    {{/each}}
+                </table>
+            {{/if}}
+            <div class="desc"><span>商品介绍</span></div>
+            <div class="descContent">
+                {{#if description}}
+                <span>{{trim description}}</span>
+                {{/if}}
+                {{^if description}}
+                <span>该商品暂无介绍</span>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+
+</style>

@@ -1,0 +1,19 @@
+<div id='paidui_cover' style="display:none">
+    <div class="layer-box02" id="layer-box02-js" style="display:block" {{(el)->el.hammer()}}></div>
+    <div class="pr-lay" id="pr-lay-js" style="display:block">
+        <span class="close" id="pr-lay-close-js" {{(el)->el.hammer()}}>×</span>
+        <div class="paidui_msg">
+            <h3>请输入就餐人数</h3>
+            <div class="m-d">
+                    <input type="number"  value="" id="p_number" />
+            </div>
+            {{#if showItemList.isNeedTel}}
+            <h3>请输入手机号</h3>
+            <div class="m-d">
+                    <input type="number" value="" id="telphone" />
+            </div>
+            {{/if}}
+            <div class="foot_btn"><span class="btn btn_close" {{(el)->el.hammer()}}>取消</span><span class="btn btn_bg" id="build_voucher" {{(el)->el.hammer()}} data-disabled="false">确认</span></td></tr></div>
+        </div>
+    </div>
+</div>

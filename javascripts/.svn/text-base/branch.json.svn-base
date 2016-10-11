@@ -1,0 +1,43 @@
+{
+  "systemId" : "23432434",
+  "name" : "滋乐滋乐-光谷天地店",
+  "todaySale" :12345769.65,
+  "todayOrderCount" : 459,
+  "yesterdayOrderCount" : 430,
+  "todaySellCount" : 1087,
+  "yesterdaySellCount" : 1090,
+  "todayAverageCost" : 78.5,
+  "yesterdayAverageCost":77,
+  "todayTableTurnoverRate" : 45 ,
+  "yesterdayTableTurnoverRate" :39,
+  "weekSaleList" :[
+    {
+      "date": "06-10",
+      "sale": 342734.17
+    },
+    {
+      "date": "06-11",
+      "sale": 542734.17
+    },
+    {
+      "date": "06-12",
+      "sale": 402734.17
+    },
+    {
+      "date": "06-13",
+      "sale": 500034.17
+    },
+    {
+      "date": "06-14",
+      "sale": 482634.17
+    },
+    {
+      "date": "06-15",
+      "sale": 432734.17
+    },
+    {
+      "date": "06-15",
+      "sale": 392734.17
+    }
+  ]
+}

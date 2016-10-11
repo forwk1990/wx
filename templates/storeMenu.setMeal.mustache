@@ -1,0 +1,48 @@
+<div id="menu-setMeal-box" style="display:none">
+	<div class="layer-box01" id="layer-setMeal-js" style="display:block" {{(el)->el.hammer()}}></div>
+	<div {{data 'menuVo'}} class="cert-lay" id="setMeal-lay-js" style="display:block;bottom:0px;z-index: 15;">
+        <div class="header">
+            <span class="title">{{name}}</span>
+            <span class="price">¥{{currentSelectedPrice}}</span>
+        </div>
+        <div class="selection" style="height:200px;">
+            <!--存在子项-->
+            {{#each setMealInfo.multipleItems}}
+                <div class="category-area" style="padding-bottom:0px;padding-top:10px;"   {{data 'category_item'}}>
+                    <span class="title">{{categoryName}}{{#requireQuantity}}(任选{{requireQuantity}}款){{/requireQuantity}}</span>
+                    <ul>
+                        {{#each items}}
+                            <li {{data 'check_item'}} class="check_item" style="border-bottom:0px;" {{(el)->el.hammer()}}>
+                                <span>{{name}}</span>{{#extendPrice}}(另加{{extendPrice}}元){{/extendPrice}}
+                                <span class="check_num">x{{quantity}}</span>
+                                <span class="{{#selected}}check_checked{{/selected}}{{^selected}}check_normal{{/selected}}"></span>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/each}}
+            <!--存在做法-->
+            {{#if setMealInfo.requireItems.length}}
+                <div class="category-area" style="padding-top:10px;padding-bottom:0px">
+                    <span class="title">必选</span>
+                    <ul>
+                        {{#each setMealInfo.requireItems}}
+                            <li style="border-bottom:0px;">
+                                <span class="check_name">{{name}}</span>
+                                <span class="check_num">x{{quantity}}</span>
+                                <span class="check_disabled"></span>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+        </div>
+        <div style="position:absolute;bottom: 0px;width:100%;display:block;">
+            <div class="confirm-background">
+                <div class="confirm" style="padding:15px;">
+                    <div {{(el)->el.hammer()}} class="confirm-button" id="confirm-add-button">确认</div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>

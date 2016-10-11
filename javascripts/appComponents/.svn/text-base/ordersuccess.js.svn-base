@@ -1,0 +1,78 @@
+define(["util", "model"], function (b, a) {
+    return can.Component.extend({
+        tag: "ordersuccess",
+        template: can.view(b.getView("ordersuccess")),
+        viewModel: {
+            order: null, isExpand: false, wapper: "", init: function () {
+                var c = this;
+                c.attr("wapper", Config.wapcontext);
+                c._render()
+            }, _shareConfig: function (c) {
+                var d = window.location.href;
+                a.WX.shareConfig({currentUrl: d}, function (e) {
+                    wx.config({
+                        debug: false,
+                        appId: e["appId"],
+                        timestamp: parseInt(e.timeStamp),
+                        nonceStr: e.nonceStr,
+                        signature: e.signature,
+                        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareWeibo", "onMenuShareQZone"]
+                    });
+                    wx.ready(function () {
+                        var f = {
+                            title: "美食公众平台",
+                            desc: "我在" + c.cloudName + "点了这些菜",
+                            link: "http://www.bj-evetime.com/" + Config.wapcontext + "order/detail?orderNo=" + c.orderNumber,
+                            imgUrl: c.imgPath,
+                            trigger: function (g) {
+                                console.info("分享我的点单")
+                            },
+                            success: function (g) {
+                                console.info("已分享我的点单")
+                            },
+                            cancel: function (g) {
+                                console.info("已取消我的点单")
+                            },
+                            fail: function (g) {
+                                console.info(JSON.stringify(g))
+                            }
+                        };
+                        wx.onMenuShareAppMessage(f);
+                        wx.onMenuShareTimeline(f);
+                        wx.onMenuShareQQ(f);
+                        wx.onMenuShareQZone(f);
+                        wx.onMenuShareWeibo(f)
+                    })
+                })
+            }, _render: function () {
+                var c = b.getOrderInfo();
+                if (c && c.items && c.items.length >= 0) {
+                    c.total = b.calculateSum().price;
+                    b.saveOrderInfo(c);
+                    can.each(c.items, function (e, d) {
+                        e.totalPrice = e.price * e.quantity
+                    });
+                    this.attr("order", c);
+                    this._shareConfig(c)
+                } else {
+                    b.Route.route(this, {page: "store", func: "menu"})
+                }
+                b.Busy.stop()
+            }, finish: function () {
+                b.Busy.start();
+                var c = b.getOrderInfo();
+                c.totalPrice = 0;
+                c.total = 0;
+                c.items = [];
+                c.orderRemarks = "";
+                c.orderNumber = "";
+                b.saveOrderInfo(c);
+                b.removeOrderInfo();
+                wx.closeWindow();
+            }, toggleExpand: function () {
+                this.attr("isExpand", !this.attr("isExpand"))
+            }
+        },
+        events: {}
+    })
+});

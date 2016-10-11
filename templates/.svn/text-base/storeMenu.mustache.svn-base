@@ -1,0 +1,99 @@
+
+<div id="wrapper-main">
+    <div class="wrapper-head">
+        <div class="head-back" style="display:none;" {{(el)->el.hammer()}}></div>{{selectedStore.storename}}
+        <div class="head-sec" {{(el)->el.hammer()}} style="display:block;"></div>
+    </div>
+    <div class="wrapper-ad wrapper-ad-js" {{^adShowFlag}}style="display:none"{{/adShowFlag}} can-click="showAdActivity">
+        <div class="ad-con ad-con-js">            {{#each tips}}<p>{{CONTENTCN}}</p>            {{/each}}</div>
+        <span id="ad-js" can-click="closeAd"></span></div>
+    <div class="wrapper-box" id="wrapper-box-js" {{^adShowFlag}}style="margin-top:44px"{{/adShowFlag}}>
+        <div id="left-categroy">
+            <ul class="left-menu">
+                {{#each storeMenuList}}
+                    <li type="{{type}}" {{(el)->el.hammer()}} {{data 'categoryVo'}}
+                        class="{{#if selected}}on{{/if}}">
+                        {{#if selected}}
+                            <div class="left-line"></div>
+                        {{/if}}
+                        <span>{{sectionTitle}}</span>
+                        {{#if purchaseCount}}
+                            <div class="pri-num">{{showCountF purchaseCount}}</div>
+                        {{/if}}
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="carte-box" id="right-menulist">
+            <div id="holder"></div>
+            <ul class="menulist">
+                {{#each storeMenuList}}
+                    <li class="categoryTitle" type="{{type}}">{{sectionTitle}}</li>
+                    {{#each menus}}
+                        <li  {{data 'menuVo'}} systemId='{{systemId}}' type="{{type}}">
+                            <div class="li-line">
+                                <div class="pr-box pr-box-js">
+                                    <div class="pr-pic" {{(el)->el.hammer()}}>
+                                        <img onerror="this.onerror=null;this.src=Config.wapcontext+'images/no_pic_60_60.png'"
+                                            src="{{wapcontext}}images/no_pic_60_60.png" real_src="{{imageUrl}}">
+                                    </div>
+                                    <p class="j-height">{{trim name}}</p>
+                                    <p class="j-height" style="max-height: 38px;font-size:12px;color:#999;margin-top:4px;line-height: 21px;">
+                                        {{trim description}}
+                                        {{#isShowProgressQuantity}}
+                                            <br/>
+                                            该产品仅剩<span style="color:#EA4B23;">{{remainQuantity}}</span>份
+                                        {{/isShowProgressQuantity}}
+                                    </p>
+                                </div>
+                                <div class="pr-bos">
+                                    <div class="pr-pri">
+                                        {{#isDiscount}}
+                                            ¥{{price}}<span style="text-decoration: line-through;">原价:¥{{originalPrice}}</span>
+                                        {{/isDiscount}}
+                                        {{^isDiscount}}
+                                            ¥{{price}}<span style="text-decoration: line-through;"></span>
+                                        {{/isDiscount}}
+                                    </div>
+                                    <div class="pr-num">
+                                        {{#isEstimate}}
+                                            <span class="estimate-text">已售罄</span>
+                                        {{/isEstimate}}
+                                        {{^isEstimate}}
+                                            <div class="but-box listMinus" {{(el)->el.hammer()}} {{^quantity}}style="display:none"{{/quantity}}>
+                                                <span class="minus"></span>
+                                            </div>
+                                            <span class='num'
+                                                  {{^quantity}}style="display:none"{{/quantity}}>{{quantity}}</span>
+
+                                            <div class="listAdd but-box" {{(el)->el.hammer()}}>
+                                                <span class="add"></span>
+                                            </div>
+                                        {{/isEstimate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="order-layer" style="bottom:-100px" {{isShowCartBar}}>
+        <div class="order-bg"></div>
+        <div class="order-box">
+            <div id="cart-animate" class="cart-animate">
+                <div class="ceart-img" id="orderCart" can-tap="triggerCart" {{(el)->el.hammer()}}>
+                    <div class="ceart-num">{{totalNumForShow}}</div>
+                </div>
+            </div>
+            <div class="order-pri" can-tap="triggerCart" {{(el)->el.hammer()}} style="{{#isTotalDiscount}}line-height:18px;{{/isTotalDiscount}}">
+                ￥{{totalPriceForShow}}
+                <br/><span style="font-size:12px;text-decoration: line-through;">原价:￥{{totalOriginalPriceForShow}}</span>
+            </div>
+            <span id="settlement" class="pay-b" {{(el)->el.hammer()}} can-tap="settlement">选好了</span>
+
+            <div class="order-tips"></div>
+        </div>
+    </div>
+</div>

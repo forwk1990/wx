@@ -1,0 +1,122 @@
+<!--页面框架开始-->
+<div id="wrapper-main" class="body-bg01">
+    <!--页眉开始-->
+    <div class="wrapper-head">
+        <div class="head-back" {{(el)->el.hammer()}}></div>
+        菜单确认
+    </div>
+    <!--页眉结束/-->
+
+    <!--主体开始-->
+    <div class="pay-box" class="body-bg01">
+
+        <!-- 手机号 -->
+        <div class="input-box" style="margin-top:10px;">
+            <ul class="input-con">
+                <li class="no-border">
+                    <span class="til icon">手机号：</span>
+					<span class="input-mode">
+                        <input id="phone" style="height:42px;" name="phone" type="tel" value="{{order.phoneNumber}}"
+                               placeholder="输入手机号接收订餐信息" maxlength="11">
+					</span>
+                </li>
+            </ul>
+        </div>
+
+        {{#carSeatShowFlag}}
+
+            <!-- 验证码 -->
+            <div class="input-box">
+                <ul class="input-con">
+                    <li class="no-border" id="li_notes">
+                        <span class="input-mode">
+                            <input style="width:45%;border-right:1px solid #cccccc;height:42px;" id="carNumber"
+                                   name="notes" type="text" value="" placeholder="请输入车厢号" maxlength="4">
+                            <input style="width:45%;float:right;height:42px;" id="seatNumber" name="notes" type="text"
+                                   value="" placeholder="请输入座位号" maxlength="4">
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        {{/carSeatShowFlag}}
+
+        <!-- 备注 -->
+        <div class="input-box">
+            <ul class="input-con">
+                <li class="no-border" id="li_notes">
+                    <span class="til">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+                    <span class="input-mode">
+                            <input id="notes" name="notes" type="text" value='{{order.orderRemarks}}'
+                                   placeholder="(选填)如&nbsp;&nbsp;&quot;少盐、不放葱&quot;&nbsp;&nbsp;15字内" maxlength="15">
+					</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 菜单详情 -->
+        <div class="pay-list-box">
+            <ul class="pay-list-con">
+                {{#each order.items}}
+                    <li class="payli-num-js" {{data 'orderItem'}}>
+                        <div class="pr-til  prxx-js" {{(el)->el.hammer()}}>
+                            {{#isParent}}<span>{{trim parentName}}</span>{{/isParent}}
+                            <span {{#if isParent}}style="font-size:12px;color:#999;"{{/if}}>{{trim name}}</span>
+                        </div>
+                        {{#isDiscount}}
+                            <div class="pr-pri" style="margin-top:-20px;">
+                                <span style="margin-right:-8px;">￥{{price}}</span><br>
+                                <span style="font-size: 12px;text-decoration: line-through;color:#bcbcbc;">原价:{{originalPrice}}</span>
+                            </div>
+                            <div class="pr-num">
+                                <div class="but-box cartMinus" {{(el)->el.hammer()}}><span class="minus"></span></div>
+                                <span class='num'>{{quantity}}</span>
+
+                                <div class="but-box cartAdd" {{(el)->el.hammer()}}><span class="add"></span></div>
+                            </div>
+                        {{/isDiscount}}
+                        {{^isDiscount}}
+                            <div class="pr-pri">
+                                <span style="margin-right:-8px;">￥{{price}}</span>
+                            </div>
+                            <div class="pr-num">
+                                <div class="but-box cartMinus" {{(el)->el.hammer()}}><span class="minus"></span></div>
+                                <span class='num'>{{quantity}}</span>
+
+                                <div class="but-box cartAdd" {{(el)->el.hammer()}}><span class="add"></span></div>
+                            </div>
+                        {{/isDiscount}}
+                    </li>
+                    {{#items.length}}
+                        {{#each items}}
+                            <li class="tallyup_setMeal_item">
+                                <span class="tallyup_setMeal_item_name">{{name}}</span>
+                                <span class="tallyup_setMeal_item_quantity">x{{quantity}}</span>
+                            </li>
+                        {{/each}}
+                        <li></li>
+                    {{/items.length}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <!--主体结束/-->
+    <!--购物车开始/-->
+    {{#order.total}}
+        <div class="order-layer">
+            <div class="order-bg"></div>
+            <div class="order-box">
+                <div class="order-pri order-pri-ml"
+                     style="color:#ea4b23;border:0px;margin-left:0px;{{#order.isDiscount}}line-height:18px;{{/order.isDiscount}}">
+                    <span class="left" style="color:#ea4b2c;">共计:￥{{order.total}}</span>
+                    {{#order.isDiscount}}
+                        <br><span style="color:#f5f5f5;font-size:12px;">原价:￥{{order.originalTotal}}
+                        &nbsp;&nbsp;立减:￥{{order.balanceAccount}}</span>
+                    {{/order.isDiscount}}
+                </div>
+                <span class="pay-b" {{(el)->el.hammer()}}>立即下单</span>
+            </div>
+        </div>
+    {{/order.total}}
+    <!--购物车结束/-->
+</div>
+<!--页面框架结束/-->

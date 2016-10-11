@@ -1,0 +1,45 @@
+<!--页面框架开始-->
+<div id="wrapper-main">
+    <!--页眉开始-->
+    <div class="wrapper-head">
+        <div class="head-home" {{(el)->el.hammer()}}></div>
+        <div class="head-sec" {{(el)->el.hammer()}}></div>
+        排队商家
+    </div>
+    <!--页眉结束/-->
+    <!--餐厅菜单开始-->
+    <div class="rest-menu" id="rest-menu-js">
+        <ul>
+            <li id="rest-menu01-js" can-tap="getRestaurantListNearby" {{(el)->el.hammer()}}>附近</li>
+            <li id="rest-menu02-js" {{(el)->el.hammer()}}><span>全部餐厅&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
+            <li id="rest-menu03-js" can-tap="getRestaurantListFromLoc" {{(el)->el.hammer()}}>我去过的</li>
+        </ul>
+    </div>
+    <!--餐厅菜单结束/-->
+    <!--餐厅列表开始-->
+    <div class="rest-box" id="rest-box">
+        <div class="rest-list">
+            <ul id="restaurant_list">
+                {{#each showItemList}}
+                    <li class="rest-li-js" {{data 'storeInfo'}}>
+                        <div class="box" {{(el)->el.hammer()}}>
+                            <img onerror="this.onerror=null;this.src=Config.wapcontext+'images/no_pic.png'"
+                                 src="{{wapcontext}}images/no_pic_60_60.png" real_src="{{imgPath}}" alt="{{restaurantName}}"/>
+                                <h4>{{restaurantName}}{{#if branchName}}({{branchName}}){{/if}}</h4>
+                                <p><i>{{typeName}}</i><i>¥{{distance}}/人</i><i>20km</i></p>
+                                <span class="queues_info">需等待<i>{{countTable}}</i>桌</span>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+            <div class="pull-box">
+                <div id="pullUp" style="display:none;">
+                    <span class="pullUpIcon"></span>
+                    <span id="pullUpLabel" class="pullUpLabel">上拉加载更多</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--餐厅列表结束/-->
+</div>
+<!--页面框架结束/-->

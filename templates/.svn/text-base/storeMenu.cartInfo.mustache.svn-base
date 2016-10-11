@@ -1,0 +1,55 @@
+<div id="cart-box" style="display:none">
+    <div class="layer-box01" id="layer-box01-js" style="display:block" {{(el)->el.hammer()}}></div>
+    <div class="cert-lay" id="cert-lay-js" style="display:block">
+        <h4>购物车<span class="del" id="emptyCart" {{(el)->el.hammer()}}>清空全部</span></h4>
+
+        <div class="ow-y">
+            <!--    <div class="dis-box">
+		    	<ul>
+		    		{{#each promotions}}
+                    <li {{data 'promotion'}}>
+			    		<div class="til">{{couponTitleCn}}</div>
+		    			{{#items}}
+		    			<span {{data 'promotionItem'}} class="promotionItem" {{(el)->el.hammer()}}>{{trim nameCN}}</span>
+			    		{{/items}}
+                {{^items}}
+		    			&lt;!&ndash; {{descCN}} &ndash;&gt;
+		    			<span class="promotion"  {{(el)->el.hammer()}}>加入订单</span>
+						{{/items}}
+					</li>
+					{{/each}}
+				</ul>
+		    </div>-->
+            <ul>
+                {{#each orderedItems}}
+                    <!--<li {{data 'orderItem'}} {{#isParent}}style="padding:0"{{/isParent}}>-->
+                    <li {{data 'orderItem'}}>
+                        <div class="pr-til">
+                            {{#isParent}}<span>{{trim parentName}}</span>{{/isParent}}
+                            <span {{#if isParent}}style="font-size:12px;color:#999;"{{/if}}>{{trim name}}</span>
+                        </div>
+                        {{^isDiscount}}
+                            <div class="pr-pri">
+                                <span>￥{{money price}}</span>
+                            </div>
+                        {{/isDiscount}}
+                        {{#isDiscount}}
+                            <div class="pr-pri" style="top:33%;">
+                                <span>￥{{price}}</span>
+                                <br>
+                        <span style="font-size:12px;color:#bcbcbc;text-decoration: line-through;">
+                            原价:￥{{originalPrice}}</span>
+                            </div>
+                        {{/isDiscount}}
+                        <div class="pr-num">
+                            <div class="but-box cartMinus" {{(el)->el.hammer()}}><span class="minus"></span></div>
+                            <span class='num'>{{quantity}}</span>
+
+                            <div class="but-box cartAdd" {{(el)->el.hammer()}}><span class="add"></span></div>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

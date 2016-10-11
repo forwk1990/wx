@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="{{wapper}}stylesheets/orderdetail.css"/>
+<div class="d1" id="orderDetail">
+    <div class="name">{{orderDetail.restaurantName}}</div>
+    <img src="{{orderDetail.restaurantUrl}}" style="width: 94%;border:5px solid #fff;">
+    <table class="itable">
+        <thead>
+        <tr><th align="left" style="font-size:18px">菜品名称</th><th align="center" style="font-size:18px">份数</th><th style="font-size:18px">价格</th></tr>
+        </thead>
+        <tbody>
+        {{#each orderDetail.foodChoice}}
+        <tr><td align="left" style="font-size:18px">{{foodName}}</td><td style="font-size:18px" align="center">{{foodCount}}</td><td style="font-size:18px">￥ {{total}}</td></tr>
+        {{/each}}
+        </tbody>
+        <tfoot><tr><td colspan="2"><a href="http://www.bj-evetime.com/weixinDL.html" target="_blank" class="down_app" style="font-size:18px">更多详情请下载APP</a></td></tr></tfoot>
+    </table>
+    <div class="name1" style="margin-top: 80px">
+        <a href="http://www.bj-evetime.com/weixinDL.html" target="_blank" class="down_app">下载美食快点APP
+        <div style="font-size: 18px;">
+            支持Android与IOS手机应用
+        </div>
+        </a>
+    </div>
+    <img src="{{wapper}}images/order_10.png" />
+    <img src="{{wapper}}images/order_08.png" />
+    <img src="{{wapper}}images/order_05.png" />
+    <img src="{{wapper}}images/order_07.png" />
+    <img src="{{wapper}}images/order_11.png" />
+    <img src="{{wapper}}images/qrcode.jpg" />
+</div>

@@ -1,0 +1,60 @@
+#orderDetail img{
+    width: 80%;
+    margin-top: 50px;
+}
+html{
+    font-size: 62.5%;
+    height: 100%;
+}
+body{
+    height: 100%;
+    background: url("../images/order_01.png");
+    text-align: center;
+}
+#orderDetail{
+    width: 100%;
+    padding-bottom:5em;
+    background: url("../images/order_02.png") no-repeat;
+    background-size: contain;
+}
+#orderDetail .down_app:link,#orderDetail .down_app:visited,#orderDetail .down_app:hover,#orderDetail .down_app:active{color:#fff!important;}
+#orderDetail .name{
+    display: inline-block;
+    width: 80%;
+    padding: 0.2em 0;
+    background: url("../images/order_03.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+    margin: 30px auto 0;
+    font-size: 3.6rem;
+    font-family: "ºÚÌå";
+    color: #fff;
+    text-align: center;
+}
+#orderDetail .name1{
+    display: inline-block;
+    width: 80%;
+    padding: 1.0em 0;
+    background: url("../images/order_04.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    font-size: 35px;
+    font-family: "ºÚÌå";
+    color: #fff;
+    text-align: center;
+}
+#orderDetail .itable{
+    width:98%;
+    border-collapse:
+    collapse;
+    color:#fff;
+    margin: 0 auto;
+}
+#orderDetail .itable tbody td,.itable th{
+    border-bottom:1px solid #fff;
+    padding:10px 8px 10px 8px;
+}
+#orderDetail .itable tfoot td{
+    padding:15px 0;
+    color:#fff;
+    text-align:right;
+}
